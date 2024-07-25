@@ -218,7 +218,6 @@ RenderStyle::RenderStyle(CreateDefaultStyleTag)
     m_nonInheritedFlags.position = static_cast<unsigned>(initialPosition());
     m_nonInheritedFlags.unicodeBidi = static_cast<unsigned>(initialUnicodeBidi());
     m_nonInheritedFlags.floating = static_cast<unsigned>(initialFloating());
-    m_nonInheritedFlags.tableLayout = static_cast<unsigned>(initialTableLayout());
     m_nonInheritedFlags.textDecorationLine = initialTextDecorationLine().toRaw();
     m_nonInheritedFlags.usesViewportUnits = false;
     m_nonInheritedFlags.usesContainerUnits = false;
@@ -398,7 +397,6 @@ inline void RenderStyle::NonInheritedFlags::copyNonInheritedFrom(const NonInheri
     position = other.position;
     unicodeBidi = other.unicodeBidi;
     floating = other.floating;
-    tableLayout = other.tableLayout;
     textDecorationLine = other.textDecorationLine;
     usesViewportUnits = other.usesViewportUnits;
     usesContainerUnits = other.usesContainerUnits;
@@ -1036,7 +1034,7 @@ bool RenderStyle::changeRequiresLayout(const RenderStyle& other, OptionSet<Style
         if (m_inheritedFlags.borderCollapse != other.m_inheritedFlags.borderCollapse
             || m_inheritedFlags.emptyCells != other.m_inheritedFlags.emptyCells
             || m_inheritedFlags.captionSide != other.m_inheritedFlags.captionSide
-            || m_nonInheritedFlags.tableLayout != other.m_nonInheritedFlags.tableLayout)
+            || tableLayout() != other.tableLayout())
             return true;
 
         // In the collapsing border model, 'hidden' suppresses other borders, while 'none'
@@ -1545,8 +1543,6 @@ void RenderStyle::conservativelyCollectChangedAnimatableProperties(const RenderS
             changingProperties.m_properties.set(CSSPropertyDisplay);
         if (first.floating != second.floating)
             changingProperties.m_properties.set(CSSPropertyFloat);
-        if (first.tableLayout != second.tableLayout)
-            changingProperties.m_properties.set(CSSPropertyTableLayout);
         if (first.textDecorationLine != second.textDecorationLine)
             changingProperties.m_properties.set(CSSPropertyTextDecorationLine);
 
@@ -1790,6 +1786,8 @@ void RenderStyle::conservativelyCollectChangedAnimatableProperties(const RenderS
             changingProperties.m_properties.set(CSSPropertyObjectFit);
         if (first.appearance != second.appearance)
             changingProperties.m_properties.set(CSSPropertyAppearance);
+        if (first.tableLayout != second.tableLayout)
+            changingProperties.m_properties.set(CSSPropertyTableLayout);
 
         if (first.transform.ptr() != second.transform.ptr())
             conservativelyCollectChangedAnimatablePropertiesViaTransformData(*first.transform, *second.transform);
