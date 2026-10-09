@@ -7552,3 +7552,10 @@ header: <WebCore/UserGestureIndicator.h>
     WebCore::GestureScope scope;
     bool removesTransientActivation;
 };
+
+header: <WebCore/ViewportSegments.h>
+[CustomHeader] struct WebCore::ViewportSegments {
+    unsigned columns;
+    unsigned rows;
+    Vector<WebCore::FloatRect> segmentRects;
+};

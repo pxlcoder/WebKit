@@ -1501,6 +1501,7 @@ set(WebCore_NON_SVG_IDL_FILES
     page/UALowEntropyJSON.idl
     page/UndoItem.idl
     page/UndoManager.idl
+    page/Viewport.idl
     page/VisualViewport.idl
     page/WebKitBuffer.idl
     page/WebKitBufferNamespace.idl
@@ -2138,6 +2139,7 @@ set(WebCore_SUPPLEMENTAL_IDL_FILES
     page/DOMWindow+DeviceOrientation.idl
     page/DOMWindow+RequestIdleCallback.idl
     page/DOMWindow+Selection.idl
+    page/DOMWindow+Viewport.idl
     page/DOMWindow+VisualViewport.idl
     page/Navigator+LoginStatus.idl
     page/Navigator+UserActivation.idl

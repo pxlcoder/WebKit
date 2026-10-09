@@ -15118,6 +15118,7 @@ WebPageCreationParameters WebPageProxy::creationParameters(WebProcessProxy& proc
     parameters.sizeToContentAutoSizeMaximumSize = internals().sizeToContentAutoSizeMaximumSize;
     parameters.autoSizingShouldExpandToViewHeight = m_autoSizingShouldExpandToViewHeight;
     parameters.viewportSizeForCSSViewportUnits = internals().viewportSizeForCSSViewportUnits;
+    parameters.viewportSegments = internals().viewportSegments;
     parameters.scrollPinningBehavior = internals().scrollPinningBehavior;
     if (m_scrollbarOverlayStyle)
         parameters.scrollbarOverlayStyle = m_scrollbarOverlayStyle.value();
@@ -16886,6 +16887,19 @@ void WebPageProxy::setViewportSizeForCSSViewportUnits(const FloatSize& viewportS
         return;
 
     send(Messages::WebPage::SetViewportSizeForCSSViewportUnits(viewportSize));
+}
+
+void WebPageProxy::setViewportSegments(const WebCore::ViewportSegments& segments)
+{
+    if (internals().viewportSegments == segments)
+        return;
+
+    internals().viewportSegments = segments;
+
+    if (!hasRunningProcess())
+        return;
+
+    send(Messages::WebPage::SetViewportSegments(internals().viewportSegments));
 }
 
 #if USE(AUTOMATIC_TEXT_REPLACEMENT)
